@@ -24,4 +24,9 @@ cd test
 
 cmsRun RunTree_cosmics_cfg_testuros_Demonstrator.py
 
+enter a run number:
+
 ```
+
+
+The runs are located in this location: /eos/cms/store/group/dpg_dt/comm_dt/uROS/DemonstratorTests/RawData/
