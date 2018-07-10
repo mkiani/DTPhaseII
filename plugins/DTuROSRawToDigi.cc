@@ -28,8 +28,6 @@
 #include "DataFormats/MuonDetId/interface/DTWireId.h"
 #include "EventFilter/DTRawToDigi/interface/DTROChainCoding.h"
 
-#include "UserCode/DTDPGAnalysis/interface/BunchIDfromTDC.h"
-
 #include <iostream>
 
 
@@ -238,25 +236,6 @@ void DTuROSRawToDigi::process(int DTuROSFED,
 
     int slot       = ( dataWord >> 56 ) & 0xF;      // positions 56 -> 59
 
-
-/**** from Carsten's code ****/
-
-   int dataLenght = (dataWord & 0xFFFFF);         // positions 0 -> 19
-   int bxCounter  = (dataWord >> 20 ) & 0xFFF;    // positions 20 -> 31
-   int event      = (dataWord >> 32 ) & 0xFFFFFF; // positions 32 -> 55
-//   int AMC_ID     = (dataWord >> 56 ) & 0xF;      // positions 56 -> 59
-   int control    = (dataWord >> 60 ) & 0xF;      // positions 59 -> 63 
-//   int wheel      = uROSWheel;
-
-
-std::cout << "Header:  eventId0:" << event << "   bunchid:" << bxCounter << std::endl;
-
-bunchIDfromTDC = bxCounter ;
-
-/**** end of from Carsten's code ****/
-
-
-
     
     if ( (slot < 1) || (slot > 12) ) {
       if ( debug_ ) edm::LogWarning("dturos_unpacker") << "Slot " << std::dec << slot << " out of range (1-12) in crate " << crate;
@@ -293,12 +272,6 @@ bunchIDfromTDC = bxCounter ;
 	  int tdcId      = ( dataWord >> 51 ) & 0x3;    // positions  51 -> 52
 	  int link       = ( dataWord >> 53 ) & 0x7F;   // positions  53 -> 59
 	  int kchannel   = ( dataWord >> 46 ) & 0x3FFF; // positions  46 -> 59
-//
-// ---- ANDREA and MARA: Fix unpacking of digi time
-//
-        int offset_t    =    ( dataWord >> 37 ) & 0x1FF;         // positions   5 -> 13
-        int tdc_hit_t   =    ( dataWord >> 32    & 0x1F );        // positions   0 ->  4
-
 
 
 	  int dduId = theDDU(crate, slot, link);
@@ -334,12 +307,8 @@ bunchIDfromTDC = bxCounter ;
 	  DTWireId detId = DTWireId(wheelId, stationId, sectorId, slId, layerId[kchannel%4], (kchannel/4)+1+cellOffset);
 	  int wire = detId.wire();
 
-/// ------ ANDREA and MARA: fix the tdcTime  (1/30 of BX instead of 1/32 
-	  // DTDigi digi(wire, tdcTime, hitOrder[channelIndex.getCode()]);
-
-	  DTDigi digi(wire,  offset_t*30+tdc_hit_t-1, hitOrder[channelIndex.getCode()]);
+	  DTDigi digi(wire, tdcTime, hitOrder[channelIndex.getCode()]);
 	  digis.insertDigi(detId.layerId(),digi);
-printf("Do I ever pass here? %d %d\n",offset_t*30+tdc_hit_t-1,tdcTime);
 
 	}
         else if ( selector == 0 ) { // error word
@@ -358,12 +327,6 @@ printf("Do I ever pass here? %d %d\n",offset_t*30+tdc_hit_t-1,tdcTime);
 	  int link       = ( dataWord >> 21 ) & 0x7F;   // positions  21 -> 27
 	  int kchannel   = ( dataWord >> 14 ) & 0x3FFF; // positions  14 -> 27
 
-//
-// ---- ANDREA and MARA: fixing digitime
-//
-
-        int offset_t    =    ( dataWord >>  5 ) & 0x1FF;         // positions   5 -> 13
-        int tdc_hit_t   =    ( dataWord         & 0x1F );        // positions   0 ->  4
 
 	  if (tdcTime == 16383) continue;
 
@@ -401,14 +364,9 @@ printf("Do I ever pass here? %d %d\n",offset_t*30+tdc_hit_t-1,tdcTime);
 
 	  int wire = detId.wire();
 
-//
-// ---- ANDREA and MARA: fixing digitime
-//	  DTDigi digi(wire, tdcTime, hitOrder[channelIndex.getCode()]);
-
-	  DTDigi digi(wire, offset_t*30+tdc_hit_t-1, hitOrder[channelIndex.getCode()]);
+	  DTDigi digi(wire, tdcTime, hitOrder[channelIndex.getCode()]);
         digis.insertDigi(detId.layerId(),digi);
 
-printf("--- changing time %d %d\n",tdcTime,offset_t*30+tdc_hit_t-1);
 	}
       else if ( selector2 == 1 ) { // error word
 
