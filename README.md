@@ -14,6 +14,8 @@ cmsenv
 
 git clone https://github.com/cmsdtoffline/DTDPGAnalysis UserCode/DTDPGAnalysis
 
+git clone https://github.com/mkiani/Demonstrator.git EventFilter/DTuROSRawToDigi 
+
 scramv1 b -j 5
 
 ```
