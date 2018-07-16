@@ -1,4 +1,4 @@
-ssh -Y dtdqm@lxplus.cern.ch << EOF
+ssh dtdqm@lxplus.cern.ch << EOF
 
 	echo "Change the alias in the script accordingly, e.g. run000, split, c_split"
         echo "run number:" "run000$1"
