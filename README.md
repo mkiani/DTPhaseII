@@ -23,3 +23,4 @@ cmsRun RunTree_cosmics_cfg_testuros_Demonstrator.py
 enter a run number:
 
 ```
+The instruction on how to take and copy runs to the eos is provided in the wiki: https://github.com/mkiani/Demonstrator/wiki/DT-Demonstrator 
