@@ -13,7 +13,7 @@ cmsenv
 git clone https://github.com/cmsdtoffline/DTDPGAnalysis UserCode/DTDPGAnalysis
 git clone https://github.com/mkiani/Demonstrator.git EventFilter/DTuROSRawToDigi 
 
-mv EventFilter/DTuROSRawToDigi/test . 
+cp -r EventFilter/DTuROSRawToDigi/test . 
 
 scramv1 b -j 5
 
