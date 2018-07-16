@@ -25,4 +25,19 @@ enter a run number:
 ```
 
 
-The runs are located in this location: /eos/cms/store/group/dpg_dt/comm_dt/uROS/DemonstratorTests/RawData/
+The runs are located in this location:  dtdqm@dtsx5-02.cern.ch:/home/runs/run000XXX
+
+
+Copy the runs using the CopyRuns.sh to the eos space: /eos/cms/store/group/dpg_dt/comm_dt/uROS/DemonstratorTests/RawData/
+
+
+Rememeber: Change the Alias of run e.g. run000, split, whatever is chosen:
+
+```
+
+./CopyRuns.sh RunNumber 
+
+
+```
+
+
