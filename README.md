@@ -23,26 +23,3 @@ cmsRun RunTree_cosmics_cfg_testuros_Demonstrator.py
 enter a run number:
 
 ```
-
-
-The runs are located in this location:  dtdqm@dtsx5-02.cern.ch:/home/runs/run000XXX
-
-
-Copy the runs using the CopyRuns.sh to the eos space: /eos/cms/store/group/dpg_dt/comm_dt/uROS/DemonstratorTests/RawData/
-
-
-Rememeber: Change the alias inside the script of run e.g. run000, split, whatever is chosen:
-
-```
-./CopyRuns.sh RunNumber 
-
-e.g. 
-
-./CopyRuns.sh 240
-
-will copy run: dtdqm@dtsx5-02.cern.ch:/home/runs/run000240 
-to  /eos/cms/store/group/dpg_dt/comm_dt/uROS/DemonstratorTests/RawData/run000240
-```
-
-You have to put the password twice for dtdqm@lxplus and dtdqm@sx5-02 (Same \*\*To\*\*\*18)
-
