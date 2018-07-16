@@ -40,7 +40,8 @@ e.g.
 
 ./CopyRuns.sh 240
 
-will copy run000240 to /eos/cms/store/group/dpg_dt/comm_dt/uROS/DemonstratorTests/RawData/run000240
+will copy run: dtdqm@dtsx5-02.cern.ch:/home/runs/run000240 
+to  /eos/cms/store/group/dpg_dt/comm_dt/uROS/DemonstratorTests/RawData/run000240
 ```
 
 
