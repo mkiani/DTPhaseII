@@ -44,5 +44,5 @@ will copy run: dtdqm@dtsx5-02.cern.ch:/home/runs/run000240
 to  /eos/cms/store/group/dpg_dt/comm_dt/uROS/DemonstratorTests/RawData/run000240
 ```
 
-You have to put the password twice for dtdqm@lxplus and dtdqm@sx5-02 (Same \*\*Top\*\*18)
+You have to put the password twice for dtdqm@lxplus and dtdqm@sx5-02 (Same \*\*To\*\*\*18)
 
