@@ -14,7 +14,7 @@ git clone https://github.com/cmsdtoffline/DTDPGAnalysis UserCode/DTDPGAnalysis
 git clone https://github.com/mkiani/Demonstrator.git EventFilter/DTuROSRawToDigi 
 
 cp -r EventFilter/DTuROSRawToDigi/test . 
-mv BunchIDfromTDC.h UserCode/DTDPGAnalysis/interface/
+mv EventFilter/DTuROSRawToDigi/BunchIDfromTDC.h UserCode/DTDPGAnalysis/interface/
 
 scramv1 b -j 5
 
