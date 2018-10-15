@@ -6,8 +6,8 @@ Code for DT demonstrator for electronics upgrade. This package contains the code
 To install it and run DTNtuple production:
 
 ```
-cmsrel CMSSW_10_1_1
-cd CMSSW_10_1_1/src/
+cmsrel CMSSW_9_2_0_patch1
+cd CMSSW_9_2_0_patch1/src/
 cmsenv
 
 git clone https://github.com/cmsdtoffline/DTDPGAnalysis UserCode/DTDPGAnalysis
