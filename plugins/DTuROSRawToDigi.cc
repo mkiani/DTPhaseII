@@ -350,7 +350,7 @@ bunchIDfromTDC = bxCounter ;
 
         float fL1TrigTime = ( BX1 * 25 ) + ( tpf1 * 25 / 30.0 ) ;
 	printf("L1TrigTime  %f\n", fL1TrigTime );
-	printf("Difference between BX counter (header) and printing tpf %d %d\n", BX1-bxCounter1, tpf );
+	printf("Difference between BX counter (header) and printing tpf %d %d\n", BX1-bxCounter, tpf1 );
         }	      
 	 
         else if ( selector == 0 ) { // error word
