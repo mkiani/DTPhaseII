@@ -339,9 +339,20 @@ bunchIDfromTDC = bxCounter ;
 
 	  DTDigi digi(wire,  offset_t*30+tdc_hit_t-1, hitOrder[channelIndex.getCode()]);
 	  digis.insertDigi(detId.layerId(),digi);
-printf("Do I ever pass here? %d %d\n",offset_t*30+tdc_hit_t-1,tdcTime);
+	  printf("Do I ever pass here? %d %d\n",offset_t*30+tdc_hit_t-1,tdcTime);
 
 	}
+//-------BILAL ADDITION -----////     
+	else if (selector == 2 ) // TP word
+        {
+        int tpf1   = ( selector == 2 && dataWord >> 32 ) & 0x1F; // positions  32 -> 36           
+        int BX1   =  ( selector == 2 && dataWord >> 37 ) & 0xFFF; // positions  37 -> 48
+
+        float fL1TrigTime = ( BX * 25 ) + ( tpf * 25 / 30.0 ) ;
+	printf("L1TrigTime  %f\n", fL1TrigTime );
+	printf("Difference between BX counter (header) and printing tpf %d %d\n", BX-bxCounter, tpf );
+        }	      
+	 
         else if ( selector == 0 ) { // error word
 
 	  if (  debug_ ) edm::LogWarning("dturos_unpacker") << "Error word [" << std::dec << k << "] : " << std::hex << dataWord 
@@ -366,6 +377,12 @@ printf("Do I ever pass here? %d %d\n",offset_t*30+tdc_hit_t-1,tdcTime);
         int tdc_hit_t   =    ( dataWord         & 0x1F );        // positions   0 ->  4
 
 	  if (tdcTime == 16383) continue;
+		
+		
+        int tpf2   = ( selector == 0 && dataWord >> 32 ) & 0x1F; // positions  32 -> 36           
+        int BX2   =  ( selector == 0 && dataWord >> 37 ) & 0xFFF; // positions  37 -> 48
+
+          float fL1TrigTime2 = ( BX * 25 ) + ( tpf * 25 / 30.0 ) ;		
 
 
 	  int dduId = theDDU(crate, slot, link);
