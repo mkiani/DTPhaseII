@@ -378,11 +378,11 @@ bunchIDfromTDC = bxCounter ;
 
 	  if (tdcTime == 16383) continue;
 		
-		
+//---- BILAL ADDITION ---- // 		
         int tpf2   = ( selector == 0 && dataWord >> 32 ) & 0x1F; // positions  32 -> 36           
         int BX2   =  ( selector == 0 && dataWord >> 37 ) & 0xFFF; // positions  37 -> 48
 
-          float fL1TrigTime2 = ( BX * 25 ) + ( tpf * 25 / 30.0 ) ;		
+          float fL1TrigTime2 = ( BX2 * 25 ) + ( tpf2 * 25 / 30.0 ) ;		
 
 
 	  int dduId = theDDU(crate, slot, link);
