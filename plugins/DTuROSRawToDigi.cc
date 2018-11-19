@@ -348,9 +348,9 @@ bunchIDfromTDC = bxCounter ;
         int tpf1   = ( selector == 2 && dataWord >> 32 ) & 0x1F; // positions  32 -> 36           
         int BX1   =  ( selector == 2 && dataWord >> 37 ) & 0xFFF; // positions  37 -> 48
 
-        float fL1TrigTime = ( BX * 25 ) + ( tpf * 25 / 30.0 ) ;
+        float fL1TrigTime = ( BX1 * 25 ) + ( tpf1 * 25 / 30.0 ) ;
 	printf("L1TrigTime  %f\n", fL1TrigTime );
-	printf("Difference between BX counter (header) and printing tpf %d %d\n", BX-bxCounter, tpf );
+	printf("Difference between BX counter (header) and printing tpf %d %d\n", BX1-bxCounter1, tpf );
         }	      
 	 
         else if ( selector == 0 ) { // error word
