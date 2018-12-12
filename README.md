@@ -19,6 +19,6 @@ scramv1 b -j 5
 cd test
 cmsRun RunTree_cosmics_cfg_testAB7_Demonstrator.py
 
-enter a run number:
+A test data file from the miniDAQ is added in the test, one can change the path to new runs in the config file
 
 ```
