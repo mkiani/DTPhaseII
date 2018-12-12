@@ -1,8 +1,5 @@
 import FWCore.ParameterSet.Config as cms
 
-runnumber = input('enter a run number: ')
-runnumberString = str(runnumber)
-
 process = cms.Process("DTNT")
 
 process.load("EventFilter.DTAB7RawToDigi.dtab7unpacker_cfi")
@@ -38,7 +35,7 @@ process.load("RecoMuon.DetLayers.muonDetLayerGeometry_cfi")
 ########################################################################### 
 ########   UNPACKER FOR uROS !!!!!!  #######################################  
 ### For.dat or .root files but NOT for .raw data!!!!!!!!!!!!!!!
-#process.dtab7unpacker.DTuROS_FED_Source = 'rawDataCollector'
+process.dtab7unpacker.DTuROS_FED_Source = 'rawDataCollector'
 ########################################################################### 
 
 
@@ -91,7 +88,8 @@ process.source = cms.Source("PoolSource",
 ###     ##'/store/express/Commissioning2017/ExpressCosmics/FEVT/Express-v1/000/290/348/00000/7215813E-1614-E711-90DC-02163E011E08.root'
 ###     ##'/store/express/Run2017A/ExpressCosmics/FEVT/Express-v1/000/294/696/00000/9AFC1E6C-713D-E711-8F3B-02163E011CE3.root'
 #       'file:/afs/cern.ch/user/m/mkiani/work/Demonstrator/test/run000506.root',
-###
+### 
+	'file:A01CC3C8-B413-D449-BB55-AE4C78CD93F7.root'
    ),
    secondaryFileNames = cms.untracked.vstring(
   )
@@ -122,20 +120,20 @@ process.source = cms.Source("PoolSource",
 ############################################################################################### 
 
 # creating a list for all the filesi
-import os
-file_list = []
-for file in os.listdir('/eos/cms/store/group/dpg_dt/comm_dt/uROS/DemonstratorTests/RawData/run000'+runnumberString+'/'): 
-    if file.endswith('.raw'):
-        file_list.append('file:'+'/eos/cms/store/group/dpg_dt/comm_dt/uROS/DemonstratorTests/RawData/run000'+runnumberString+'/'+str(file))
-
-
-process.source =   cms.Source("FRDStreamSource",
-                              fileNames = cms.untracked.vstring(
-        #                  'file:/eos/cms/store/group/dpg_dt/comm_dt/uROS/DemonstratorTests/RawData/run000'+runnumberString+'/run000'+runnumberString+'_ls0001_index000000.raw',
-        file_list
-        )
-                              )
-
+#import os
+#file_list = []
+#for file in os.listdir('/eos/cms/store/group/dpg_dt/comm_dt/uROS/DemonstratorTests/RawData/run000'+runnumberString+'/'): 
+#    if file.endswith('.raw'):
+#        file_list.append('file:'+'/eos/cms/store/group/dpg_dt/comm_dt/uROS/DemonstratorTests/RawData/run000'+runnumberString+'/'+str(file))
+#
+#
+#process.source =   cms.Source("FRDStreamSource",
+#                              fileNames = cms.untracked.vstring(
+#        #                  'file:/eos/cms/store/group/dpg_dt/comm_dt/uROS/DemonstratorTests/RawData/run000'+runnumberString+'/run000'+runnumberString+'_ls0001_index000000.raw',
+#        file_list
+#        )
+#                              )
+#
 #
 #
 #from CondCore.DBCommon.CondDBSetup_cfi import * ## Deprecated v800
@@ -151,7 +149,7 @@ process.CondDBSetup.__delattr__('connect') ## New lines needed when using CondCo
 process.ttrigsource = cms.ESSource("PoolDBESSource",
                                    ##CondDBSetup,
                                    process.CondDBSetup,
-                                   timetype = cms.string('runnumber'),
+#                                  timetype = cms.string('runnumber'),
                                    toGet = cms.VPSet(cms.PSet(record = cms.string('DTTtrigRcd'),
                                                               label = cms.untracked.string('cosmics'),  ## ONLY if using cosmic reconstruction  
                                                               ###tag = cms.string('DT_tTrig_CRAFT31X_V01_offline')
@@ -223,7 +221,7 @@ process.options = cms.untracked.PSet(wantSummary = cms.untracked.bool(False))
 
 process.myDTNtuple.localDTmuons = cms.untracked.bool(True)
 # OTPUT
-process.myDTNtuple.outputFile = "DTNtuple_uros_"+runnumberString+".root"
+process.myDTNtuple.outputFile = "DTNtuple_uros_ab7.root"
 process.myDTNtuple.dtTrigSimDCCLabel = cms.InputTag("dtTriggerPrimitiveDigis")
 ##process.myDTNtuple.dtDigiLabel = cms.InputTag("dtunpacker")
 process.myDTNtuple.dtDigiLabel = cms.InputTag("dtab7unpacker:DTuROSDigis")
