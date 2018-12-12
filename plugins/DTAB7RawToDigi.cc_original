@@ -1,6 +1,6 @@
 //-------------------------------------------------
 //
-//   Class: DTuROSRawToDigi
+//   Class: DTAB7RawToDigi
 //
 //   L1 DT uROS Raw-to-Digi
 //
@@ -19,7 +19,7 @@
 //
 //--------------------------------------------------
 
-#include "DTuROSRawToDigi.h"
+#include "DTAB7RawToDigi.h"
 
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "CondFormats/DTObjects/interface/DTReadOutMapping.h"
@@ -33,7 +33,7 @@
 #include <iostream>
 
 
-DTuROSRawToDigi::DTuROSRawToDigi(const edm::ParameterSet& pset) {
+DTAB7RawToDigi::DTAB7RawToDigi(const edm::ParameterSet& pset) {
 
   produces<DTDigiCollection>("DTuROSDigis");
 
@@ -50,10 +50,10 @@ DTuROSRawToDigi::DTuROSRawToDigi(const edm::ParameterSet& pset) {
 }
 
 
-DTuROSRawToDigi::~DTuROSRawToDigi(){}
+DTAB7RawToDigi::~DTAB7RawToDigi(){}
 
 
-void DTuROSRawToDigi::produce(edm::Event& e, const edm::EventSetup& c) {
+void DTAB7RawToDigi::produce(edm::Event& e, const edm::EventSetup& c) {
 
   DTDigiCollection digis;
 
@@ -66,7 +66,7 @@ void DTuROSRawToDigi::produce(edm::Event& e, const edm::EventSetup& c) {
 }
 
 
-bool DTuROSRawToDigi::fillRawData(edm::Event& e, const edm::EventSetup& c, DTDigiCollection& digis) {
+bool DTAB7RawToDigi::fillRawData(edm::Event& e, const edm::EventSetup& c, DTDigiCollection& digis) {
 
   edm::Handle<FEDRawDataCollection> data;
   e.getByToken(Raw_token, data);
@@ -83,7 +83,7 @@ bool DTuROSRawToDigi::fillRawData(edm::Event& e, const edm::EventSetup& c, DTDig
 }
 
 
-void DTuROSRawToDigi::process(int DTuROSFED,
+void DTAB7RawToDigi::process(int DTuROSFED,
                               edm::Handle<FEDRawDataCollection> data,
                               edm::ESHandle<DTReadOutMapping> mapping,
                               DTDigiCollection& digis) {
@@ -411,7 +411,7 @@ bunchIDfromTDC = bxCounter ;
 }
 
 
-int DTuROSRawToDigi::theDDU(int crate, int slot, int link) {
+int DTAB7RawToDigi::theDDU(int crate, int slot, int link) {
 
      if (crate == 1368) {
        if (slot < 7) return 770;
@@ -427,7 +427,7 @@ int DTuROSRawToDigi::theDDU(int crate, int slot, int link) {
 }
 
 
-int DTuROSRawToDigi::theROS(int crate, int slot, int link) {
+int DTAB7RawToDigi::theROS(int crate, int slot, int link) {
 
   if (slot%6 == 5) return link+1;
 
@@ -436,7 +436,7 @@ int DTuROSRawToDigi::theROS(int crate, int slot, int link) {
 }
 
 
-int DTuROSRawToDigi::theROB(int crate, int slot, int link) {
+int DTAB7RawToDigi::theROB(int crate, int slot, int link) {
 
   if (slot%6 == 5) return 23;
  
@@ -447,7 +447,7 @@ int DTuROSRawToDigi::theROB(int crate, int slot, int link) {
 }
 
 
-void DTuROSRawToDigi::calcCRC(long word, int& myC) {
+void DTAB7RawToDigi::calcCRC(long word, int& myC) {
 
   int myCRC[16], D[64], C[16];
 
@@ -548,4 +548,4 @@ void DTuROSRawToDigi::calcCRC(long word, int& myC) {
 
 
 #include "FWCore/Framework/interface/MakerMacros.h"
-DEFINE_FWK_MODULE(DTuROSRawToDigi);
+DEFINE_FWK_MODULE(DTAB7RawToDigi);

@@ -5,7 +5,7 @@ runnumberString = str(runnumber)
 
 process = cms.Process("DTNT")
 
-process.load("EventFilter.DTuROSRawToDigi.dturosunpacker_cfi")
+process.load("EventFilter.DTAB7RawToDigi.dtab7unpacker_cfi")
 #process.load("EventFilter.DTRawToDigi.uROSStage2Digis_cfi")
 
 ##process.load("FWCore.MessageService.MessageLogger_cfi")
@@ -32,13 +32,13 @@ process.load("RecoMuon.DetLayers.muonDetLayerGeometry_cfi")
 
 ######   COMENTED FOR uROS !!!!!!  #######################################  
 ##process.load('Configuration.StandardSequences.RawToDigi_Data_cff')
-##process.load("EventFilter.DTuROSRawToDigi.dtunpackerDDUGlobal_cfi")
+##process.load("EventFilter.DTAB7RawToDigi.dtunpackerDDUGlobal_cfi")
 ##process.dtunpacker.readOutParameters.debug = False
 ##process.dtunpacker.readOutParameters.rosParameters.debug = False
 ########################################################################### 
 ########   UNPACKER FOR uROS !!!!!!  #######################################  
 ### For.dat or .root files but NOT for .raw data!!!!!!!!!!!!!!!
-#process.dturosunpacker.DTuROS_FED_Source = 'rawDataCollector'
+#process.dtab7unpacker.DTuROS_FED_Source = 'rawDataCollector'
 ########################################################################### 
 
 
@@ -185,7 +185,7 @@ process.es_prefer_ttrigsource = cms.ESPrefer('PoolDBESSource','ttrigsource')
 ####from RecoTracker.Configuration.RecoTracker_cff import *  ## Needed at least in  710pre8 to avoid an error in RecoMuonCosmics file (GroupedCkfTrajectoryBuilder)
 from RecoLocalMuon.Configuration.RecoLocalMuonCosmics_cff import *
 #process.dt1DRecHits.dtDigiLabel = 'dtunpacker'
-process.dt1DRecHits.dtDigiLabel = 'dturosunpacker:DTuROSDigis'
+process.dt1DRecHits.dtDigiLabel = 'dtab7unpacker:DTuROSDigis'
 #process.dt1DRecHits.dtDigiLabel = 'uROSStage2Digis:DTDigis'
 
 
@@ -226,7 +226,7 @@ process.myDTNtuple.localDTmuons = cms.untracked.bool(True)
 process.myDTNtuple.outputFile = "DTNtuple_uros_"+runnumberString+".root"
 process.myDTNtuple.dtTrigSimDCCLabel = cms.InputTag("dtTriggerPrimitiveDigis")
 ##process.myDTNtuple.dtDigiLabel = cms.InputTag("dtunpacker")
-process.myDTNtuple.dtDigiLabel = cms.InputTag("dturosunpacker:DTuROSDigis")
+process.myDTNtuple.dtDigiLabel = cms.InputTag("dtab7unpacker:DTuROSDigis")
 #process.myDTNtuple.dtDigiLabel = cms.InputTag("uROSStage2Digis:DTDigis")
 
 ##process.myDTNtuple.staMuLabel = cms.InputTag("standAloneMuons")
@@ -266,9 +266,9 @@ process.rpcRecHits.rpcDigiLabel = cms.InputTag('rpcUnpackingModule')
 ###### Cosmics uros Slice TEST on CMSSW_9_2_0_patch1 (2017) 
 ###### Only DTDigiProduction & storage 
 ##process.myDTNtuple.Include4DSegments =  cms.untracked.bool(False)
-##process.p = cms.Path(process.dturosunpacker + process.myDTNtuple) ## Uncomment also previous line to avoid crashes with the non-existen 4DSegs
+##process.p = cms.Path(process.dtab7unpacker + process.myDTNtuple) ## Uncomment also previous line to avoid crashes with the non-existen 4DSegs
 ###### DTDigiProduction & 4DSegment production
-process.p = cms.Path(process.dturosunpacker * process.dt1DRecHits * process.dt2DSegments * process.dt4DSegments + process.myDTNtuple)
+process.p = cms.Path(process.dtab7unpacker * process.dt1DRecHits * process.dt2DSegments * process.dt4DSegments + process.myDTNtuple)
 #process.p = cms.Path(process.uROSStage2Digis * process.dt1DRecHits * process.dt2DSegments * process.dt4DSegments + process.myDTNtuple)
 
 

@@ -1,6 +1,6 @@
 //-------------------------------------------------
 //
-/**  \class DTuROSRawToDigi
+/**  \class DTAB7RawToDigi
  *
  *   L1 DT uROS Raw-to-Digi
  *
@@ -11,8 +11,8 @@
  */
 //
 //--------------------------------------------------
-#ifndef uROSTest_DTuROSRawToDigi_h
-#define uROSTest_DTuROSRawToDigi_h
+#ifndef uROSTest_DTAB7RawToDigi_h
+#define uROSTest_DTAB7RawToDigi_h
 
 #include "FWCore/Framework/interface/ConsumesCollector.h"
 #include "DataFormats/Common/interface/Handle.h"
@@ -32,15 +32,15 @@
 class DTReadOutMapping;
 
 
-class DTuROSRawToDigi : public edm::EDProducer {
+class DTAB7RawToDigi : public edm::EDProducer {
 
 public:
 
   /// Constructor
-  DTuROSRawToDigi(const edm::ParameterSet& pset);
+  DTAB7RawToDigi(const edm::ParameterSet& pset);
 
   /// Destructor
-  virtual ~DTuROSRawToDigi();
+  virtual ~DTAB7RawToDigi();
 
   /// Produce digis out of raw data
   void produce(edm::Event& e, const edm::EventSetup& c);
