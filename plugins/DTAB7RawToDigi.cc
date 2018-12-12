@@ -28,7 +28,7 @@
 #include "DataFormats/MuonDetId/interface/DTWireId.h"
 #include "EventFilter/DTRawToDigi/interface/DTROChainCoding.h"
 
-#include "UserCode/DTDPGAnalysis/interface/BunchIDfromTDC.h"
+#include "BunchIDfromTDC.h"
 
 #include <iostream>
 
