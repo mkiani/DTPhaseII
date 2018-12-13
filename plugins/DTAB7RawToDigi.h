@@ -2,7 +2,7 @@
 //
 /**  \class DTAB7RawToDigi
  *
- *   L1 DT uROS Raw-to-Digi
+ *   L1 DT AB7 Raw-to-Digi
  *
  *
  *
@@ -11,8 +11,8 @@
  */
 //
 //--------------------------------------------------
-#ifndef uROSTest_DTAB7RawToDigi_h
-#define uROSTest_DTAB7RawToDigi_h
+#ifndef AB7Test_DTAB7RawToDigi_h
+#define AB7Test_DTAB7RawToDigi_h
 
 #include "FWCore/Framework/interface/ConsumesCollector.h"
 #include "DataFormats/Common/interface/Handle.h"
@@ -54,7 +54,7 @@ public:
 
 private:
   
-  edm::InputTag DTuROSInputTag_;
+  edm::InputTag DTAB7InputTag_;
 
   bool debug_;
 
@@ -68,7 +68,7 @@ private:
 
   //process data
 
-  void process(int DTuROSFED,
+  void process(int DTAB7FED,
                edm::Handle<FEDRawDataCollection> data,
                edm::ESHandle<DTReadOutMapping> mapping,
                DTDigiCollection& digis,
@@ -89,7 +89,7 @@ private:
 
   int theROB(int crate, int slot, int link);
 
-  edm::InputTag getDTuROSInputTag() { return DTuROSInputTag_; }
+  edm::InputTag getDTAB7InputTag() { return DTAB7InputTag_; }
   
   edm::EDGetTokenT<FEDRawDataCollection> Raw_token;
 

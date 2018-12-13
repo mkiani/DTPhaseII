@@ -2,7 +2,7 @@
 //
 //   Class: DTAB7RawToDigi
 //
-//   L1 DT uROS Raw-to-Digi
+//   L1 DT AB7 Raw-to-Digi
 //
 //
 //
@@ -38,7 +38,7 @@ DTAB7RawToDigi::DTAB7RawToDigi(const edm::ParameterSet& pset) {
   produces<DTDigiCollection>("DTAB7Digis");
   produces<L1MuDTChambPhContainer>("DTAB7Primitives");
 
-  DTuROSInputTag_ = pset.getParameter<edm::InputTag>("DTuROS_FED_Source");
+  DTAB7InputTag_ = pset.getParameter<edm::InputTag>("DTAB7_FED_Source");
 
   debug_ = pset.getUntrackedParameter<bool>("debug", false);
 
@@ -46,7 +46,7 @@ DTAB7RawToDigi::DTAB7RawToDigi(const edm::ParameterSet& pset) {
  
   nfeds_ = feds_.size();
 
-  Raw_token = consumes<FEDRawDataCollection>(DTuROSInputTag_);
+  Raw_token = consumes<FEDRawDataCollection>(DTAB7InputTag_);
 
 }
 
@@ -61,14 +61,14 @@ void DTAB7RawToDigi::produce(edm::Event& e, const edm::EventSetup& c) {
 
   if (!fillRawData(e, c, digis, primitives)) return;
 
-  auto uROSDTDigi_product = std::make_unique<DTDigiCollection>(digis);
+  auto AB7DTDigi_product = std::make_unique<DTDigiCollection>(digis);
 
   L1MuDTChambPhContainer primContainer;
   primContainer.setContainer(primitives);
-  auto uROSDTPrim_product = std::make_unique<L1MuDTChambPhContainer>(primContainer);
+  auto AB7DTPrim_product = std::make_unique<L1MuDTChambPhContainer>(primContainer);
 
-  e.put(std::move(uROSDTDigi_product), "DTAB7Digis");
-  e.put(std::move(uROSDTPrim_product), "DTAB7Primitives");
+  e.put(std::move(AB7DTDigi_product), "DTAB7Digis");
+  e.put(std::move(AB7DTPrim_product), "DTAB7Primitives");
 
 }
 
@@ -93,7 +93,7 @@ bool DTAB7RawToDigi::fillRawData(edm::Event& e,
 }
 
 
-void DTAB7RawToDigi::process(int DTuROSFED,
+void DTAB7RawToDigi::process(int DTAB7FED,
 			     edm::Handle<FEDRawDataCollection> data,
 			     edm::ESHandle<DTReadOutMapping> mapping,
 			     DTDigiCollection& digis,
@@ -101,11 +101,11 @@ void DTAB7RawToDigi::process(int DTuROSFED,
 
 
   // Container
-  std::vector<long> DTuROSWordContainer;
+  std::vector<long> DTAB7WordContainer;
 
 
   // Header constituents
-  int BOEevTy, DTuROSId;
+  int BOEevTy, DTAB7Id;
 
 
   // Trailer constituents
@@ -126,7 +126,7 @@ void DTAB7RawToDigi::process(int DTuROSFED,
   //--> Header - line 1
 
 
-  FEDRawData dturosdata = data->FEDData(DTuROSFED); 
+  FEDRawData dturosdata = data->FEDData(DTAB7FED); 
   if ( dturosdata.size() == 0 ) return;
 
 
@@ -137,11 +137,11 @@ void DTAB7RawToDigi::process(int DTuROSFED,
 
 
   BOEevTy  = ( dataWord >> 60 ) & 0xF;  // positions 60 -> 63
-  DTuROSId = ( dataWord >> 8 ) & 0xFFF; // positions 8 -> 19
+  DTAB7Id = ( dataWord >> 8 ) & 0xFFF; // positions 8 -> 19
 
 
-  if ( (BOEevTy != 0x5) || (DTuROSId != DTuROSFED) ) {
-    if ( debug_ ) edm::LogWarning("dturos_unpacker") << "Not a DTuROS FED " << DTuROSFED << " or header " << std::hex << dataWord;
+  if ( (BOEevTy != 0x5) || (DTAB7Id != DTAB7FED) ) {
+    if ( debug_ ) edm::LogWarning("dturos_unpacker") << "Not a DTAB7 FED " << DTAB7FED << " or header " << std::hex << dataWord;
     return;
   }
 
@@ -150,7 +150,7 @@ void DTAB7RawToDigi::process(int DTuROSFED,
   calcCRC(dataWord, newCRC);
 
 
-  int crate = DTuROSId;
+  int crate = DTAB7Id;
 
 
   //--> Header - line 2
@@ -184,7 +184,7 @@ void DTAB7RawToDigi::process(int DTuROSFED,
 
   }
 
-  //--> DTuROS data
+  //--> DTAB7 data
 
 
   std::map<int,int>::iterator sziterator = slot_size.begin();
@@ -196,7 +196,7 @@ void DTAB7RawToDigi::process(int DTuROSFED,
        calcCRC(dataWord, newCRC);
 
 
-       DTuROSWordContainer.push_back(dataWord);
+       DTAB7WordContainer.push_back(dataWord);
 
     }
   }  
@@ -245,13 +245,13 @@ void DTAB7RawToDigi::process(int DTuROSFED,
   //--> analyze event
 
  
-  std::vector<long>::iterator DTuROSiterator = DTuROSWordContainer.begin();
-  std::vector<long>::iterator DTuROSitend = DTuROSWordContainer.end();
+  std::vector<long>::iterator DTAB7iterator = DTAB7WordContainer.begin();
+  std::vector<long>::iterator DTAB7itend = DTAB7WordContainer.end();
 
 
-  for (; DTuROSiterator != DTuROSitend; ++DTuROSiterator) {
+  for (; DTAB7iterator != DTAB7itend; ++DTAB7iterator) {
 
-    dataWord  = (*DTuROSiterator); // Header AMC 1
+    dataWord  = (*DTAB7iterator); // Header AMC 1
 
 
     int slot       = ( dataWord >> 56 ) & 0xF;      // positions 56 -> 59
@@ -264,7 +264,7 @@ void DTAB7RawToDigi::process(int DTuROSFED,
    int event      = (dataWord >> 32 ) & 0xFFFFFF; // positions 32 -> 55
 //   int AMC_ID     = (dataWord >> 56 ) & 0xF;      // positions 56 -> 59
    int control    = (dataWord >> 60 ) & 0xF;      // positions 59 -> 63 
-//   int wheel      = uROSWheel;
+//   int wheel      = AB7Wheel;
 
 
 std::cout << "Header:  eventId0:" << event << "   bunchid:" << bxCounter << std::endl;
@@ -282,15 +282,15 @@ bunchIDfromTDC = bxCounter ;
     }
 
 
-    ++DTuROSiterator;
-    dataWord  = (*DTuROSiterator); // Header AMC 2
+    ++DTAB7iterator;
+    dataWord  = (*DTAB7iterator); // Header AMC 2
 
 
     for (int k=2; k<slot_size[slot]-1; ++k) {
 
 
-      ++DTuROSiterator;
-      dataWord  = (*DTuROSiterator);
+      ++DTAB7iterator;
+      dataWord  = (*DTAB7iterator);
       int selector  = ( dataWord >> 60 ) & 0xF; // positions 60 -> 63
       int selector2 = ( dataWord >> 28 ) & 0x1; // position  28
 
@@ -457,8 +457,8 @@ printf("--- changing time %d %d\n",tdcTime,offset_t*30+tdc_hit_t-1);
     } // END LOOP for (int k=2; k<slot_size[slot]-1; ++k) 
 
 
-    ++DTuROSiterator;
-    dataWord  = (*DTuROSiterator); // Trailer AMC
+    ++DTAB7iterator;
+    dataWord  = (*DTAB7iterator); // Trailer AMC
 
   }  // end for-loop container content
 

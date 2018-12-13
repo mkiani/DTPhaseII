@@ -27,15 +27,15 @@ process.load("RecoMuon.DetLayers.muonDetLayerGeometry_cfi")
 ###process.Timing = cms.Service("Timing")
 ########################################################################### 
 
-######   COMENTED FOR uROS !!!!!!  #######################################  
+######   COMENTED FOR AB7 !!!!!!  #######################################  
 ##process.load('Configuration.StandardSequences.RawToDigi_Data_cff')
 ##process.load("EventFilter.DTAB7RawToDigi.dtunpackerDDUGlobal_cfi")
 ##process.dtunpacker.readOutParameters.debug = False
 ##process.dtunpacker.readOutParameters.rosParameters.debug = False
 ########################################################################### 
-########   UNPACKER FOR uROS !!!!!!  #######################################  
+########   UNPACKER FOR AB7 !!!!!!  #######################################  
 ### For.dat or .root files but NOT for .raw data!!!!!!!!!!!!!!!
-process.dtab7unpacker.DTuROS_FED_Source = 'rawDataCollector'
+process.dtab7unpacker.DTAB7_FED_Source = 'rawDataCollector'
 ########################################################################### 
 
 
@@ -95,7 +95,7 @@ process.source = cms.Source("PoolSource",
   )
 )
 ############################################################################################### 
-####################### EVENTS uROS Slice test (.dat files) ################################### 
+####################### EVENTS AB7 Slice test (.dat files) ################################### 
 ###process.source = cms.Source("NewEventStreamFileReader",
 ###           fileNames = cms.untracked.vstring(
 ###          ## '/store/caf/user/dtdqm/InputMiniDAQRuns/dat/Minidaq.00213193.0001.A.storageManager.00.0000.dat'
@@ -116,7 +116,7 @@ process.source = cms.Source("PoolSource",
 
 
 ############################################################################################### 
-########### EVENTS uROS demonstrator test (.raw files) ######################################## 
+########### EVENTS AB7 demonstrator test (.raw files) ######################################## 
 ############################################################################################### 
 
 # creating a list for all the filesi
