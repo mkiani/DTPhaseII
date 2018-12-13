@@ -20,6 +20,7 @@
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/EventSetup.h"
 #include "DataFormats/DTDigi/interface/DTDigiCollection.h"
+#include "DataFormats/L1DTTrackFinder/interface/L1MuDTChambPhContainer.h"
 #include "DataFormats/MuonDetId/interface/DTLayerId.h"
 
 #include <DataFormats/FEDRawData/interface/FEDRawDataCollection.h>
@@ -46,7 +47,10 @@ public:
   void produce(edm::Event& e, const edm::EventSetup& c);
 
   /// Generate and fill FED raw data for a full event
-  bool fillRawData(edm::Event& e, const edm::EventSetup& c, DTDigiCollection& digis);
+  bool fillRawData(edm::Event& e, 
+		   const edm::EventSetup& c, 
+		   DTDigiCollection& digis,
+		   std::vector<L1MuDTChambPhDigi> & primitives);
 
 private:
   
@@ -67,7 +71,8 @@ private:
   void process(int DTuROSFED,
                edm::Handle<FEDRawDataCollection> data,
                edm::ESHandle<DTReadOutMapping> mapping,
-               DTDigiCollection& digis);
+               DTDigiCollection& digis,
+	       std::vector<L1MuDTChambPhDigi> & primitives);
 
   // utilities
   inline void readline(int& lines, long& dataWord) {

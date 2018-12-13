@@ -35,7 +35,8 @@
 
 DTAB7RawToDigi::DTAB7RawToDigi(const edm::ParameterSet& pset) {
 
-  produces<DTDigiCollection>("DTuROSDigis");
+  produces<DTDigiCollection>("DTAB7Digis");
+  produces<L1MuDTChambPhContainer>("DTAB7Primitives");
 
   DTuROSInputTag_ = pset.getParameter<edm::InputTag>("DTuROS_FED_Source");
 
@@ -56,17 +57,26 @@ DTAB7RawToDigi::~DTAB7RawToDigi(){}
 void DTAB7RawToDigi::produce(edm::Event& e, const edm::EventSetup& c) {
 
   DTDigiCollection digis;
+  std::vector<L1MuDTChambPhDigi> primitives;
 
-  if (!fillRawData(e, c, digis)) return;
+  if (!fillRawData(e, c, digis, primitives)) return;
 
   auto uROSDTDigi_product = std::make_unique<DTDigiCollection>(digis);
 
-  e.put(std::move(uROSDTDigi_product), "DTuROSDigis");
+  L1MuDTChambPhContainer primContainer;
+  primContainer.setContainer(primitives);
+  auto uROSDTPrim_product = std::make_unique<L1MuDTChambPhContainer>(primContainer);
+
+  e.put(std::move(uROSDTDigi_product), "DTAB7Digis");
+  e.put(std::move(uROSDTPrim_product), "DTAB7Primitives");
 
 }
 
 
-bool DTAB7RawToDigi::fillRawData(edm::Event& e, const edm::EventSetup& c, DTDigiCollection& digis) {
+bool DTAB7RawToDigi::fillRawData(edm::Event& e, 
+				 const edm::EventSetup& c, 
+				 DTDigiCollection& digis,
+				 std::vector<L1MuDTChambPhDigi>& primitives) {
 
   edm::Handle<FEDRawDataCollection> data;
   e.getByToken(Raw_token, data);
@@ -76,7 +86,7 @@ bool DTAB7RawToDigi::fillRawData(edm::Event& e, const edm::EventSetup& c, DTDigi
 
   //std::cout << " New Event.............................................................................." << std::endl;
   for (int w_i = 0; w_i < nfeds_; ++w_i) {
-    process(feds_[w_i], data, mapping, digis);
+    process(feds_[w_i], data, mapping, digis, primitives);
   }
   
   return true;
@@ -84,9 +94,10 @@ bool DTAB7RawToDigi::fillRawData(edm::Event& e, const edm::EventSetup& c, DTDigi
 
 
 void DTAB7RawToDigi::process(int DTuROSFED,
-                              edm::Handle<FEDRawDataCollection> data,
-                              edm::ESHandle<DTReadOutMapping> mapping,
-                              DTDigiCollection& digis) {
+			     edm::Handle<FEDRawDataCollection> data,
+			     edm::ESHandle<DTReadOutMapping> mapping,
+			     DTDigiCollection& digis,
+			     std::vector<L1MuDTChambPhDigi>& primitives) {
 
 
   // Container
@@ -104,6 +115,13 @@ void DTAB7RawToDigi::process(int DTuROSFED,
   // Hit counter
   std::map<uint32_t, int> hitOrder;
 
+
+  //--> Trigger primitive test
+
+  primitives.push_back(L1MuDTChambPhDigi(0, 
+					 1, 1, 1,
+					 999, 99, 
+					 6, 0, 0, 0));
 
   //--> Header - line 1
 

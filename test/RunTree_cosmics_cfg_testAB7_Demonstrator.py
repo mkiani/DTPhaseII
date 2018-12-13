@@ -183,7 +183,7 @@ process.es_prefer_ttrigsource = cms.ESPrefer('PoolDBESSource','ttrigsource')
 ####from RecoTracker.Configuration.RecoTracker_cff import *  ## Needed at least in  710pre8 to avoid an error in RecoMuonCosmics file (GroupedCkfTrajectoryBuilder)
 from RecoLocalMuon.Configuration.RecoLocalMuonCosmics_cff import *
 #process.dt1DRecHits.dtDigiLabel = 'dtunpacker'
-process.dt1DRecHits.dtDigiLabel = 'dtab7unpacker:DTuROSDigis'
+process.dt1DRecHits.dtDigiLabel = 'dtab7unpacker:DTAB7Digis'
 #process.dt1DRecHits.dtDigiLabel = 'uROSStage2Digis:DTDigis'
 
 
@@ -224,8 +224,8 @@ process.myDTNtuple.localDTmuons = cms.untracked.bool(True)
 process.myDTNtuple.outputFile = "DTNtuple_uros_ab7.root"
 process.myDTNtuple.dtTrigSimDCCLabel = cms.InputTag("dtTriggerPrimitiveDigis")
 ##process.myDTNtuple.dtDigiLabel = cms.InputTag("dtunpacker")
-process.myDTNtuple.dtDigiLabel = cms.InputTag("dtab7unpacker:DTuROSDigis")
-#process.myDTNtuple.dtDigiLabel = cms.InputTag("uROSStage2Digis:DTDigis")
+process.myDTNtuple.dtDigiLabel = cms.InputTag("dtab7unpacker:DTAB7Digis")
+process.myDTNtuple.dtTrigTwinMuxOutLabel = cms.InputTag("dtab7unpacker:DTAB7Primitives")
 
 ##process.myDTNtuple.staMuLabel = cms.InputTag("standAloneMuons")
 
