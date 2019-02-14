@@ -267,7 +267,7 @@ void DTAB7RawToDigi::process(int DTAB7FED,
 //   int wheel      = AB7Wheel;
 
 
-std::cout << "Header:  eventId0:" << event << "   bunchid:" << bxCounter << std::endl;
+//std::cout << "Header:  eventId0:" << event << "   bunchid:" << bxCounter << std::endl;
 
 bunchIDfromTDC = bxCounter ;
 
@@ -328,7 +328,7 @@ bunchIDfromTDC = bxCounter ;
         int offset_t    =    ( dataWord >> 37 ) & 0x1FF;         // positions   5 -> 13
         int tdc_hit_t   =    ( dataWord >> 32    & 0x1F );        // positions   0 ->  4
 
-	std::cout << "tdc id:" << tdcId << std::endl;  
+	//std::cout << "tdc id:" << tdcId << std::endl;  
 
 	  int dduId = theDDU(crate, slot, link);
 	  int rosId = theROS(crate, slot, link);
