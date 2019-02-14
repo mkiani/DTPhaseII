@@ -10,9 +10,9 @@ cmsrel CMSSW_10_3_1_patch3
 cd CMSSW_10_3_1_patch3/src/
 cmsenv
 
-git clone https://github.com/cmsdtoffline/DTDPGAnalysis UserCode/DTDPGAnalysis
 git clone https://github.com/mkiani/DTPhaseII.git .
- 
+git clone https://github.com/cmsdtoffline/DTDPGAnalysis UserCode/DTDPGAnalysis
+
 scramv1 b -j 5
 
 cd test
