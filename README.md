@@ -11,9 +11,8 @@ cd CMSSW_10_3_1_patch3/src/
 cmsenv
 
 git clone https://github.com/cmsdtoffline/DTDPGAnalysis UserCode/DTDPGAnalysis
-git clone https://github.com/mkiani/Demonstrator.git EventFilter/DTAB7RawToDigi
-
-cp -r EventFilter/DTAB7RawToDigi/test . 
+git clone https://github.com/mkiani/DTPhaseII.git .
+ 
 scramv1 b -j 5
 
 cd test
