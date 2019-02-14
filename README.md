@@ -21,3 +21,7 @@ cmsRun RunTree_cosmics_cfg_testAB7_Demonstrator.py
 A test data file from the miniDAQ is added in the test, one can change the path to new runs in the config file
 
 ```
+
+To update the direcotry, 
+
+git pull 
