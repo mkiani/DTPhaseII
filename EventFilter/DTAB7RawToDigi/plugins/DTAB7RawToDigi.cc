@@ -305,14 +305,16 @@ bunchIDfromTDC = bxCounter ;
 
 	if ( selector == 1 ) { // TDC word
         //previousSelector=true;
-/*
+
 	  int tdcTime    = ( dataWord >> 32 ) & 0x3FFF; // positions  32 -> 45
 	  int tdcChannel = ( dataWord >> 46 ) & 0x1F;   // positions  46 -> 50
 	  int tdcId      = ( dataWord >> 51 ) & 0x3;    // positions  51 -> 52
 	  int link       = ( dataWord >> 53 ) & 0x7F;   // positions  53 -> 59
 	  int kchannel   = ( dataWord >> 46 ) & 0x3FFF; // positions  46 -> 59
 
-*/
+
+
+/*
          int kchannel   = (dataWord >> 47 ) & 0x1FFF;   // 47 -> 59
          int channel_id = (dataWord >> 47 ) & 0x1FF;    // 47 -> 55   // tdcChannel 
          int superlayer = (dataWord >> 56 ) & 0x3;      // 56 -> 57   // super layer 
@@ -320,7 +322,7 @@ bunchIDfromTDC = bxCounter ;
          int tdcId      = (dataWord >> 0  ) & 0x1F;     //  0 -> 4    // tpf 
          int link       = (dataWord >> 56 ) & 0xF;      //  53 -> 59
          int BX 	= (dataWord >> 35 ) & 0xFFF;
-//
+*/
 // ---- ANDREA and MARA: Fix unpacking of digi time
 //
         int offset_t    =    ( dataWord >> 37 ) & 0x1FF;         // positions   5 -> 13
@@ -333,7 +335,7 @@ bunchIDfromTDC = bxCounter ;
 	  int robId = theROB(crate, slot, link);
 
  
-	  DTROChainCoding channelIndex(dduId, rosId, robId, tdcId, channel_id);
+	  DTROChainCoding channelIndex(dduId, rosId, robId, tdcId, tdcChannel);
 	  if (hitOrder.find(channelIndex.getCode()) == hitOrder.end()) hitOrder[channelIndex.getCode()] = 0;
 	  else hitOrder[channelIndex.getCode()]++;
 
@@ -370,7 +372,7 @@ bunchIDfromTDC = bxCounter ;
 
 	}
 //-------BILAL ADDITION -----////     
-	else if (selector == 2 ) // TP word
+/*	else if (selector == 2 ) // TP word
         {
         int tpf1   = ( selector == 2 && dataWord >> 32 ) & 0x1F; // positions  32 -> 36           
         int BX1   =  ( selector == 2 && dataWord >> 37 ) & 0xFFF; // positions  37 -> 48
@@ -379,7 +381,7 @@ bunchIDfromTDC = bxCounter ;
 	printf("L1TrigTime  %f\n", fL1TrigTime );
 	printf("Difference between BX counter (header) and printing tpf %d %d\n", BX1-bxCounter, tpf1 );
         }	      
-	 
+*/	 
         else if ( selector == 0 ) { // error word
 
 	  if (  debug_ ) edm::LogWarning("dturos_unpacker") << "Error word [" << std::dec << k << "] : " << std::hex << dataWord 
@@ -390,7 +392,7 @@ bunchIDfromTDC = bxCounter ;
 
 	if ( selector2 == 0 ) { // TDC word
 
-
+/*
          int kchannel   = (dataWord >> 17 ) & 0x1FFF;   // 17 -> 29
          int channel_id = (dataWord >> 17 ) & 0x1FF;    // 17 -> 25   // tdcChannel 
          int superlayer = (dataWord >> 26 ) & 0x3;      // 56 -> 57   // slId 
@@ -398,14 +400,13 @@ bunchIDfromTDC = bxCounter ;
          int tdcId      = (dataWord >> 0  ) & 0x1F;     //  0 -> 4    // tpf 
          int link       = (dataWord >> 26 ) & 0xF;     // 21 -> 27   // superlayer + station 
          int BX         = (dataWord >> 5  ) & 0xFFF;
+*/
 
-/*
 	  int tdcTime    = ( dataWord ) & 0x3FFF;       // positions   0 -> 13
 	  int tdcChannel = ( dataWord >> 14 ) & 0x1F;   // positions  14 -> 18
 	  int tdcId      = ( dataWord >> 19 ) & 0x3;    // positions  19 -> 20
 	  int link       = ( dataWord >> 21 ) & 0x7F;   // positions  21 -> 27
 	  int kchannel   = ( dataWord >> 14 ) & 0x3FFF; // positions  14 -> 27
-*/
 //
 // ---- ANDREA and MARA: fixing digitime
 //
@@ -413,13 +414,13 @@ bunchIDfromTDC = bxCounter ;
         int offset_t    =    ( dataWord >>  5 ) & 0x1FF;         // positions   5 -> 13
         int tdc_hit_t   =    ( dataWord         & 0x1F );        // positions   0 ->  4
 
-	//  if (tdcTime == 16383) continue;
+	  if (tdcTime == 16383) continue;
 		
 //---- BILAL ADDITION ---- // 		
-        int tpf2   = ( selector == 0 && dataWord >> 32 ) & 0x1F; // positions  32 -> 36           
-        int BX2   =  ( selector == 0 && dataWord >> 37 ) & 0xFFF; // positions  37 -> 48
+       // int tpf2   = ( selector == 0 && dataWord >> 32 ) & 0x1F; // positions  32 -> 36           
+       // int BX2   =  ( selector == 0 && dataWord >> 37 ) & 0xFFF; // positions  37 -> 48
 
-          float fL1TrigTime2 = ( BX2 * 25 ) + ( tpf2 * 25 / 30.0 ) ;		
+       //   float fL1TrigTime2 = ( BX2 * 25 ) + ( tpf2 * 25 / 30.0 ) ;		
 
 
 	  int dduId = theDDU(crate, slot, link);
@@ -427,7 +428,7 @@ bunchIDfromTDC = bxCounter ;
 	  int robId = theROB(crate, slot, link);
 
 
-	  DTROChainCoding channelIndex(dduId, rosId, robId, tdcId, channel_id);
+	  DTROChainCoding channelIndex(dduId, rosId, robId, tdcId, tdcChannel);
 	  if (hitOrder.find(channelIndex.getCode()) == hitOrder.end()) hitOrder[channelIndex.getCode()] = 0;
 	  else hitOrder[channelIndex.getCode()]++;
 
