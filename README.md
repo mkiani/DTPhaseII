@@ -1,4 +1,4 @@
-# Demonstrator
+# DTPhaseII
 
 
 Code for DT demonstrator for electronics upgrade. This package contains the code needed for CMS DT Prompt Offline Analysis and for DT root-Ntuple production.
